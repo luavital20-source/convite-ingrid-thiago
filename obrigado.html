@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obrigado — Ingrid &amp; Thiago</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#91A8D0; --blue-deep:#5F7BAD; --blue-soft:#C6D3E9;
+    --paper:#FAF7F2; --ink:#2A3138; --ink-soft:#515A62; --line:#E2E8DA;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--paper);color:var(--ink-soft);
+    font-family:'Jost',sans-serif;font-weight:300;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;
+  }
+  .card{max-width:440px;text-align:center;animation:fadeUp 1s cubic-bezier(.2,.6,.2,1) both;}
+  .icon{width:64px;height:64px;margin:0 auto 30px;color:var(--blue-deep);}
+  .icon svg{width:100%;height:100%;}
+  .label{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--blue-deep);text-indent:.34em;}
+  h1{
+    font-family:'Bodoni Moda',serif;font-weight:400;
+    font-size:clamp(30px,8vw,40px);line-height:1.15;color:var(--ink);margin-top:18px;
+  }
+  h1 .it{font-style:italic;color:var(--blue);}
+  .divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:26px 0;}
+  .divider .ln{width:52px;height:1px;background:linear-gradient(90deg,transparent,var(--blue-soft));}
+  .divider .ln.r{background:linear-gradient(90deg,var(--blue-soft),transparent);}
+  .divider .dot{width:4px;height:4px;border-radius:50%;background:var(--blue);}
+  p.msg{font-size:14px;line-height:1.85;color:var(--ink-soft);}
+  .ref{
+    margin-top:26px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blue-deep);border:1px solid var(--line);border-radius:20px;
+    padding:12px 20px;display:inline-block;background:rgba(255,255,255,.55);
+  }
+  .voltar{
+    display:inline-flex;align-items:center;gap:9px;margin-top:34px;
+    font-size:11px;letter-spacing:.26em;text-transform:uppercase;text-indent:.26em;
+    color:var(--paper);background:var(--blue-deep);border:1px solid var(--blue-deep);
+    padding:14px 28px;text-decoration:none;transition:.35s;
+  }
+  .voltar:hover{background:transparent;color:var(--blue-deep);}
+  .assin{margin-top:44px;font-family:'Bodoni Moda',serif;font-size:20px;color:var(--ink);}
+  .assin .amp{font-style:italic;color:var(--blue);padding:0 5px;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon" id="icone"></div>
+    <p class="label" id="rotulo">obrigado</p>
+    <h1 id="titulo"></h1>
+    <div class="divider"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
+    <p class="msg" id="mensagem"></p>
+    <div id="refBox"></div>
+    <a class="voltar" href="/">Voltar ao convite</a>
+    <p class="assin">Ingrid<span class="amp">&amp;</span>Thiago</p>
+  </div>
+
+<script>
+(function(){
+  const q = new URLSearchParams(location.search);
+  const status = (q.get('collection_status') || q.get('status') || '').toLowerCase();
+  const pagamento = q.get('payment_id') || q.get('collection_id') || '';
+
+  const CHECK = '<svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="1.6"/><path d="M20 33l8.5 8.5L45 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const RELOGIO = '<svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="currentColor" stroke-width="1.6"/><path d="M32 16v17l11 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const CORACAO = '<svg viewBox="0 0 64 64" fill="none"><path d="M32 52S10 39 10 25.5C10 18 15.8 13 22.3 13c4.3 0 8 2.3 9.7 5.6C33.7 15.3 37.4 13 41.7 13 48.2 13 54 18 54 25.5 54 39 32 52 32 52z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+
+  const estados = {
+    approved: {
+      icone: CHECK, rotulo:'presente confirmado',
+      titulo:'Recebemos com <span class="it">muito carinho</span>',
+      msg:'Seu presente chegou até nós. Obrigado por fazer parte dessa história e por celebrar esse começo com a gente.'
+    },
+    pending: {
+      icone: RELOGIO, rotulo:'pagamento em análise',
+      titulo:'Estamos quase <span class="it">lá</span>',
+      msg:'Seu pagamento está sendo processado. Assim que for confirmado, ele aparecerá para nós — não precisa fazer nada.'
+    },
+    in_process: {
+      icone: RELOGIO, rotulo:'pagamento em análise',
+      titulo:'Estamos quase <span class="it">lá</span>',
+      msg:'Seu pagamento está sendo processado. Assim que for confirmado, ele aparecerá para nós — não precisa fazer nada.'
+    },
+    rejected: {
+      icone: CORACAO, rotulo:'pagamento não concluído',
+      titulo:'O pagamento não <span class="it">passou</span>',
+      msg:'Algo deu errado com essa tentativa e nada foi cobrado. Se quiser, é só voltar ao convite e tentar de novo.'
+    }
+  };
+
+  const padrao = {
+    icone: CORACAO, rotulo:'obrigado',
+    titulo:'Obrigado por <span class="it">estar aqui</span>',
+    msg:'Sua presença já é o maior presente que poderíamos receber.'
+  };
+
+  const e = estados[status] || padrao;
+  document.getElementById('icone').innerHTML = e.icone;
+  document.getElementById('rotulo').textContent = e.rotulo;
+  document.getElementById('titulo').innerHTML = e.titulo;
+  document.getElementById('mensagem').textContent = e.msg;
+
+  if (pagamento && status === 'approved') {
+    document.getElementById('refBox').innerHTML =
+      '<p class="ref">Comprovante nº ' + pagamento.replace(/[^\w-]/g,'') + '</p>';
+  }
+})();
+</script>
+</body>
+</html>
