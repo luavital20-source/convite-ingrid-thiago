@@ -92,11 +92,30 @@ Depois é só trocar pelo token de produção e fazer redeploy.
 
 ## Pix
 
-Os botões **Pix** ainda estão desativados (aparecem esmaecidos). Há duas formas
-de ligar:
+O botão **Pix** abre um modal com o código **"copia e cola"** (BR Code do
+Banco Central) já com a chave e o **valor da cota embutidos** — o convidado
+cola no app do banco e não digita nada.
 
-- **Pix próprio:** preencher o campo `pix` de cada item na lista `PRESENTES`
-  do `index.html` com o link de pagamento.
-- **Pix pelo Mercado Pago:** já está pronto no servidor — `api/criar-pagamento.js`
-  aceita `{ "id": 1, "metodo": "pix" }` e devolve um checkout só com Pix.
-  Basta trocar o botão Pix do `index.html` para chamar a API como o de cartão.
+O código é gerado no próprio navegador, sem servidor e sem taxa de gateway.
+Os dados ficam no `CONFIG` do `index.html`:
+
+```js
+pixChave:   '07212660370',      // CPF
+pixTitular: 'Ingrid e Thiago',  // nome que vai dentro do código
+pixBanco:   'Banco Itaú',
+pixCidade:  'Paraipaba',
+```
+
+> O nome que o app do banco exibe na confirmação é o do **titular real da
+> chave**, registrado no banco — não o que está em `pixTitular`.
+
+Alternativa pronta, caso um dia queiram o Pix pelo Mercado Pago (com taxa,
+mas com baixa automática): `api/criar-pagamento.js` já aceita
+`{ "id": 1, "metodo": "pix" }` e devolve um checkout só com Pix.
+
+---
+
+## Confirmação de presença
+
+O botão do RSVP abre o WhatsApp **(85) 99789-1112** com a mensagem já escrita.
+Para trocar o número ou o texto, edite `confirmacao` no `CONFIG` do `index.html`.

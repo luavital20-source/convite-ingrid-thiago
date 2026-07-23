@@ -218,6 +218,49 @@
   .gift-btns a.is-todo{opacity:.5;}
   .gift-btns button.is-loading{opacity:.65;cursor:wait;}
   .gift-btns button.is-erro{border-color:#b4544f;color:#b4544f;}
+
+  /* ── Modal do Pix ── */
+  .pixm{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .pixm[hidden]{display:none;}
+  .pixm-bg{position:absolute;inset:0;background:rgba(42,49,56,.55);backdrop-filter:blur(3px);animation:pixFade .3s both;}
+  .pixm-card{
+    position:relative;width:100%;max-width:360px;max-height:90vh;overflow-y:auto;
+    background:var(--paper);border:1px solid var(--line);border-radius:20px;
+    padding:30px 26px 26px;text-align:center;
+    box-shadow:0 24px 60px rgba(42,49,56,.28);animation:pixUp .38s cubic-bezier(.2,.6,.2,1) both;
+  }
+  .pixm-x{
+    position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;
+    border:1px solid var(--line);background:transparent;color:var(--ink-soft);
+    font-size:17px;line-height:1;cursor:pointer;transition:.3s;
+  }
+  .pixm-x:hover{background:var(--blue-deep);color:var(--paper);border-color:var(--blue-deep);}
+  .pixm-eyebrow{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue-deep);text-indent:.3em;}
+  .pixm-nome{font-family:'Bodoni Moda',serif;font-size:19px;color:var(--ink);margin-top:10px;line-height:1.25;}
+  .pixm-valor{font-family:'Bodoni Moda',serif;font-style:italic;font-size:30px;color:var(--blue);margin-top:6px;}
+  .pixm-code{
+    margin-top:20px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;
+    background:rgba(255,255,255,.7);font-family:'Jost',sans-serif;font-size:10px;
+    color:var(--ink-soft);word-break:break-all;line-height:1.6;max-height:88px;overflow-y:auto;text-align:left;
+  }
+  .pixm-copiar{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:16px;
+    font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;text-indent:.24em;
+    color:var(--paper);background:var(--blue-deep);border:1px solid var(--blue-deep);
+    border-radius:34px;padding:14px 18px;cursor:pointer;transition:.3s;
+  }
+  .pixm-copiar:hover{background:transparent;color:var(--blue-deep);}
+  .pixm-copiar.copiado{background:var(--sage-deep);border-color:var(--sage-deep);color:#fff;}
+  .pixm-copiar svg{width:14px;height:14px;flex-shrink:0;}
+  .pixm-hint{font-size:11.5px;line-height:1.7;color:var(--ink-soft);margin-top:14px;}
+  .pixm-hint strong{color:var(--ink);font-weight:400;}
+  .pixm-chave{
+    margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:11px;line-height:1.75;color:var(--ink-soft);
+  }
+  .pixm-chave b{display:block;font-family:'Jost',sans-serif;font-weight:400;font-size:14px;color:var(--ink);letter-spacing:.06em;margin-top:3px;}
+  @keyframes pixFade{from{opacity:0}to{opacity:1}}
+  @keyframes pixUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
   @media(max-width:360px){.gift-grid{gap:12px;}.gift-btns{flex-direction:column;}}
 
   /* ───────── PIX ───────── */
@@ -445,10 +488,10 @@
       <h2 class="sec-title reveal">Você <span class="it">vem?</span></h2>
       <div class="divider reveal"><span class="ln"></span><span class="dot"></span><span class="ln r"></span></div>
 
-      <p class="rsvp-note reveal d1">Sua presença fará deste dia um momento ainda mais especial. Confirme com um toque.</p>
+      <p class="rsvp-note reveal d1">Sua presença fará deste dia um momento ainda mais especial. Confirme pelo WhatsApp, com um toque.</p>
       <a class="btn-fill reveal d2" id="confirmBtn" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.5"/><path d="M8.3 12.2l2.5 2.5 4.9-5.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Confirmar presença
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.5 1.71.63.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/><path d="M12 2.2c-5.4 0-9.8 4.4-9.8 9.8 0 1.73.45 3.4 1.32 4.88L2.2 21.8l5.05-1.3A9.75 9.75 0 0012 21.8c5.4 0 9.8-4.4 9.8-9.8S17.4 2.2 12 2.2zm0 17.9c-1.6 0-3.16-.43-4.53-1.24l-.32-.19-3.36.86.9-3.28-.21-.34A8.08 8.08 0 013.9 12c0-4.47 3.63-8.1 8.1-8.1s8.1 3.63 8.1 8.1-3.63 8.1-8.1 8.1z"/></svg>
+        Confirmar no WhatsApp
       </a>
     </div>
   </section>
@@ -466,6 +509,28 @@
 
 <!-- hidden audio (música) -->
 <audio id="audio" loop preload="auto" src="musica.mp3"></audio>
+
+<!-- modal do Pix (preenchido por JS) -->
+<div class="pixm" id="pixModal" hidden role="dialog" aria-modal="true" aria-labelledby="pixmNome">
+  <div class="pixm-bg" data-fechar></div>
+  <div class="pixm-card">
+    <button class="pixm-x" type="button" data-fechar aria-label="Fechar">&times;</button>
+    <p class="pixm-eyebrow">presente via pix</p>
+    <p class="pixm-nome" id="pixmNome"></p>
+    <p class="pixm-valor" id="pixmValor"></p>
+    <div class="pixm-code" id="pixmCode"></div>
+    <button class="pixm-copiar" id="pixmCopiar" type="button">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 15H4.5A1.5 1.5 0 013 13.5v-9A1.5 1.5 0 014.5 3h9A1.5 1.5 0 0115 4.5V5" stroke="currentColor" stroke-width="1.4"/></svg>
+      <span>Copiar código Pix</span>
+    </button>
+    <p class="pixm-hint">Cole no app do seu banco em <strong>Pix copia e cola</strong>. O valor já vai preenchido.</p>
+    <div class="pixm-chave">
+      Ou use a chave Pix (CPF)
+      <b id="pixmChave"></b>
+      <span id="pixmBanco"></span>
+    </div>
+  </div>
+</div>
 
 <!-- floating music control -->
 <div id="musicToggle" title="Nossa música">
@@ -491,11 +556,16 @@ const CONFIG = {
   mapCerimonia: 'https://maps.app.goo.gl/nLLh8YUiudqDXviLA',
   mapRecepcao:  'https://maps.app.goo.gl/1SKKTAonMwFqzLjTA',
 
-  // ══ A DEFINIR (Luana preenche depois; se ficar vazio, o bloco some sozinho) ══
-  siteCasal:    '',   // link da lista de presentes
-  pixKey:       '',   // chave Pix (CPF / telefone / e-mail / aleatória)
-  pixName:      '',   // titular · banco  (ex.: Ingrid ... · Nubank)
-  confirmacao:  '',   // link de confirmação de presença (RSVP)
+  // ══ Pix — chave única, usada em todas as cotas ══
+  pixChave:     '07212660370',      // CPF
+  pixTitular:   'Ingrid e Thiago',  // nome que aparece no código Pix
+  pixBanco:     'Banco Itaú',
+  pixCidade:    'Paraipaba',
+
+  // ══ Confirmação de presença — WhatsApp (85) 99789-1112 ══
+  confirmacao:  'https://wa.me/5585997891112?text=' + encodeURIComponent(
+                  'Olá! Gostaria de confirmar minha presença no casamento de Ingrid & Thiago 💍'
+                ),
 
   versiculo:    'Para que todos vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isso.',
   versiculoRef: 'Isaías 41:20',
@@ -558,6 +628,90 @@ document.title=CONFIG.noivos+' — Casamento';
   if(!CONFIG.confirmacao) hide('rsvp');
 })();
 
+/* ═══════════ PIX — código "copia e cola" (BR Code / Banco Central) ═══════════
+   Gera o payload EMV com a chave e o valor da cota já embutidos, para o
+   convidado não precisar digitar nada no app do banco.                        */
+function pixCRC16(s){
+  let c=0xFFFF;
+  for(let i=0;i<s.length;i++){
+    c^=s.charCodeAt(i)<<8;
+    for(let j=0;j<8;j++) c=(c&0x8000)?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF;
+  }
+  return c.toString(16).toUpperCase().padStart(4,'0');
+}
+function pixCode(valor){
+  const tlv=(id,v)=>id+String(v.length).padStart(2,'0')+v;
+  const ascii=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\x20-\x7E]/g,'').toUpperCase();
+  let p='';
+  p+=tlv('00','01');
+  p+=tlv('26',tlv('00','br.gov.bcb.pix')+tlv('01',CONFIG.pixChave));
+  p+=tlv('52','0000');
+  p+=tlv('53','986');
+  if(valor) p+=tlv('54',Number(valor).toFixed(2));
+  p+=tlv('58','BR');
+  p+=tlv('59',ascii(CONFIG.pixTitular).slice(0,25));
+  p+=tlv('60',ascii(CONFIG.pixCidade).slice(0,15));
+  p+=tlv('62',tlv('05','***'));
+  p+='6304';
+  return p+pixCRC16(p);
+}
+function formatarCPF(c){
+  return c.length===11 ? c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4') : c;
+}
+
+/* ─── Modal do Pix ─── */
+const pixModal=document.getElementById('pixModal');
+function abrirPix(id){
+  const g=PRESENTES.find(p=>p.id===id);
+  if(!g||!pixModal) return;
+  const codigo=pixCode(g.valor);
+  document.getElementById('pixmNome').textContent=g.nome;
+  document.getElementById('pixmValor').textContent=
+    Number(g.valor).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('pixmCode').textContent=codigo;
+  document.getElementById('pixmChave').textContent=formatarCPF(CONFIG.pixChave);
+  document.getElementById('pixmBanco').textContent=CONFIG.pixBanco+' · '+CONFIG.pixTitular;
+  pixModal.dataset.codigo=codigo;
+  pixModal.hidden=false;
+  document.body.style.overflow='hidden';
+}
+function fecharPix(){
+  if(!pixModal) return;
+  pixModal.hidden=true;
+  document.body.style.overflow='';
+  const b=document.getElementById('pixmCopiar');
+  b.classList.remove('copiado');
+  b.querySelector('span').textContent='Copiar código Pix';
+}
+if(pixModal){
+  pixModal.addEventListener('click',e=>{ if(e.target.closest('[data-fechar]')) fecharPix(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!pixModal.hidden) fecharPix(); });
+  document.getElementById('pixmCopiar').addEventListener('click',async function(){
+    const codigo=pixModal.dataset.codigo||'';
+    const rotulo=this.querySelector('span');
+    let ok=false;
+    try{
+      await navigator.clipboard.writeText(codigo);
+      ok=true;
+    }catch(err){
+      // Navegadores antigos / contexto sem HTTPS
+      try{
+        const ta=document.createElement('textarea');
+        ta.value=codigo; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+      }catch(e2){ ok=false; }
+    }
+    this.classList.toggle('copiado',ok);
+    rotulo.textContent=ok?'Código copiado!':'Copie o código acima';
+    setTimeout(()=>{
+      this.classList.remove('copiado');
+      rotulo.textContent='Copiar código Pix';
+    },2600);
+  });
+}
+
 /* ─── Galeria de presentes ─── */
 (function renderPresentes(){
   const grid=document.getElementById('giftGrid');
@@ -569,9 +723,7 @@ document.title=CONFIG.noivos+' — Casamento';
   grid.innerHTML=PRESENTES.map((g,i)=>{
     const n=String(i+1).padStart(2,'0');
     const val=g.valor?`<p class="gift-val">${brl(g.valor)}</p>`:'';
-    const pixBtn=g.pix
-      ? `<a class="gp" href="${esc(g.pix)}" target="_blank" rel="noopener">${svgPix}Pix</a>`
-      : `<a class="gp is-todo" href="#" data-todo="1">${svgPix}Pix</a>`;
+    const pixBtn=`<button class="gp" type="button" data-pix="${g.id}">${svgPix}<span>Pix</span></button>`;
     const cardBtn=`<button class="gc" type="button" data-pagar="${g.id}">${svgCard}<span>Cartão</span></button>`;
     return `<div class="gift-card reveal">
       <div class="gift-photo"><span class="gift-num">${n}</span><img loading="lazy" src="${esc(g.foto)}" alt="${esc(g.nome)}"></div>
@@ -591,8 +743,8 @@ document.title=CONFIG.noivos+' — Casamento';
      O botão chama /api/criar-pagamento, que monta a preferência no
      servidor (com o preço oficial) e devolve a URL do checkout.     */
   grid.addEventListener('click',async e=>{
-    const todo=e.target.closest('a[data-todo]');
-    if(todo){e.preventDefault();return;}
+    const pix=e.target.closest('button[data-pix]');
+    if(pix){abrirPix(Number(pix.dataset.pix));return;}
     const btn=e.target.closest('button[data-pagar]');
     if(!btn) return;
     if(btn.dataset.carregando) return;
@@ -678,31 +830,6 @@ function startCountdown(){
 /* ─── Confirmar presença (WhatsApp) ─── */
 document.getElementById('confirmBtn').href = CONFIG.confirmacao;
 
-/* ─── Copiar chave PIX ─── */
-(function(){
-  const btn=document.getElementById('pixCopyBtn');
-  if(!btn)return;
-  const key=document.getElementById('pixKey').textContent.replace(/\D/g,'');
-  const label=btn.querySelector('.pix-copy-label');
-  const original=label.textContent;
-  function feedback(){
-    btn.classList.add('copied');label.textContent='Copiado!';
-    setTimeout(()=>{btn.classList.remove('copied');label.textContent=original;},2000);
-  }
-  function fallback(text){
-    const t=document.createElement('textarea');
-    t.value=text;t.setAttribute('readonly','');
-    t.style.position='fixed';t.style.left='-9999px';t.style.opacity='0';
-    document.body.appendChild(t);t.focus();t.select();
-    try{document.execCommand('copy');}catch(e){}
-    document.body.removeChild(t);feedback();
-  }
-  btn.addEventListener('click',function(){
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(key).then(feedback).catch(()=>fallback(key));
-    }else{fallback(key);}
-  });
-})();
 </script>
 </body>
 </html>
